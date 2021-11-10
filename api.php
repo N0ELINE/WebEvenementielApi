@@ -59,9 +59,10 @@ function getQuestionbyIdFormation($idFormation){ //renvoie donnée
 
 
 function sendJSON($info){
-    header("Content-Type : application/json");
-    header("Accesss-Control-Allow-Origin:*");
-    echo json_encode($info,JSON_UNESCAPED_UNICODE);
+    header("Access-Control-Allow-Origin: *");
+    header("Content-Type: application/json");
+    echo json_encode($info,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+    
 }
 
 ?>
