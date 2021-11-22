@@ -5,7 +5,7 @@ require_once('../src/model/singletonConfig.php');
 
 
 
-function getReponse(){   //renvoi bien donnée
+function getReponse(){   //marche
     
     $pdo =  Singleton::getInstance() -> cnx; 
     $req ="Select * From REPONSES";
@@ -23,7 +23,7 @@ function getReponse(){   //renvoi bien donnée
 
 }
 
-function getReponsebyId($id){ //renvoie donnée
+function getReponsebyId($id){ //marche
     $pdo = Singleton::getInstance() -> cnx; 
     $req ="Select REPONSES.* From QUESTIONS,REPONSES where REPONSES.idReponseQuestion= :id AND QUESTIONS.idQuestion=REPONSES.idReponseQuestion";
     $stmt = $pdo->prepare($req);
@@ -41,7 +41,7 @@ function getReponsebyId($id){ //renvoie donnée
 
 }
 
-function getQuestionbyIdFormation($idFormation){ //renvoie donnée
+function getQuestionbyIdFormation($idFormation){ //marche
     $pdo = Singleton::getInstance() -> cnx; 
     $req ="Select QUESTIONS.libelle From QUESTIONS,FORMATION where FORMATION.idFormation= :id AND QUESTIONS.idQuestionFormation=FORMATION.idFormation";
     $stmt = $pdo->prepare($req);

@@ -4,10 +4,19 @@ require_once( '../src/model/singleton.php');
 require_once('../src/model/singletonConfig.php');
 
 //to do determiner quelle fonction appeller
-getReponse();
+// si user abonner à la formation on peut deduire l'id formation et l'envoyer a l'api pour faire 
+// en fonction de la formation
+
+
+//getReponse();
 // echo ("<br>---------------------------------------------------------------------<br>");
-// getReponsebyId(1);
+getReponsebyId(2);
 // echo ("<br>---------------------------------------------------------------------<br>");
-// getQuestionbyIdFormation(2);
+getQuestionbyIdFormation(2);
+
+ for ($i =0;$i<10;$i++){
+    //getQuestionbyIdFormation($i);
+    //getReponsebyId($i);
+ }
 
 ?>
