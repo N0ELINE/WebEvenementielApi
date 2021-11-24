@@ -8,15 +8,6 @@ require_once('../src/model/singletonConfig.php');
 // en fonction de la formation
 
 
-//getReponse();
-// echo ("<br>---------------------------------------------------------------------<br>");
-getReponsebyId(2);
-// echo ("<br>---------------------------------------------------------------------<br>");
-getQuestionbyIdFormation(2);
+getQuestionbyIdFormation($_GET["id"]);
 
- for ($i =0;$i<10;$i++){
-    //getQuestionbyIdFormation($i);
-    //getReponsebyId($i);
- }
 
-?>

@@ -23,27 +23,10 @@ function getReponse(){   //marche
 
 }
 
-function getReponsebyId($id){ //marche
-    $pdo = Singleton::getInstance() -> cnx; 
-    $req ="Select REPONSES.* From QUESTIONS,REPONSES where REPONSES.idReponseQuestion= :id AND QUESTIONS.idQuestion=REPONSES.idReponseQuestion";
-    $stmt = $pdo->prepare($req);
-    $stmt->bindValue(":id",$id,PDO::PARAM_STR);
-    $var=$stmt->execute();
-    if ($var==false){
-        
-        var_dump($stmt->errorInfo());
-    }
-    $reponses=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    //$stmt->closeCursor();
-    //var_dump($reponses);
-    sendJSON($reponses);
-    
-
-}
 
 function getQuestionbyIdFormation($idFormation){ //marche
     $pdo = Singleton::getInstance() -> cnx; 
-    $req ="Select QUESTIONS.libelle From QUESTIONS,FORMATION where FORMATION.idFormation= :id AND QUESTIONS.idQuestionFormation=FORMATION.idFormation";
+    $req ="Select QUESTIONS.idQuestion ,QUESTIONS.libelle From QUESTIONS,FORMATION where FORMATION.idFormation= :id AND QUESTIONS.idQuestionFormation=FORMATION.idFormation";
     $stmt = $pdo->prepare($req);
     $stmt->bindValue(":id",$idFormation,PDO::PARAM_STR);
     $var=$stmt->execute();
@@ -52,9 +35,28 @@ function getQuestionbyIdFormation($idFormation){ //marche
         var_dump($stmt->errorInfo());
     }
     $reponses=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    $stmt->closeCursor();
+     //mettre dans le array l'id quest
+    $reponses.    $stmt->closeCursor();
+    $rep = getReponseFromIdQuestion($reponses[0]["idQuestion"]);
+    //arraypush($reponses,$rep);
+    $reponses["rep"]=$rep;
     sendJSON($reponses);
 
+}
+function getReponseFromIdQuestion($idQuestion){
+    var_dump("is",$idQuestion);
+    $pdo = Singleton::getInstance() -> cnx; 
+    $req ="Select libelle From REPONSES where idReponseQuestion= :id";
+    $stmt = $pdo->prepare($req);
+    $stmt->bindValue(":id",$idQuestion,PDO::PARAM_STR);
+    $var=$stmt->execute();
+    if ($var==false){
+        
+        var_dump($stmt->errorInfo());
+    }
+    $reponses=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    var_dump("rep",$reponses);
+   return $reponses;
 }
 
 
@@ -65,4 +67,3 @@ function sendJSON($info){
     
 }
 
-?>
