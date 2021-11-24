@@ -35,18 +35,31 @@ function getQuestionbyIdFormation($idFormation){ //marche
         var_dump($stmt->errorInfo());
     }
     $reponses=$stmt->fetchAll(PDO::FETCH_ASSOC);
-     //mettre dans le array l'id quest
-    $reponses.    $stmt->closeCursor();
-    $rep = getReponseFromIdQuestion($reponses[0]["idQuestion"]);
-    //arraypush($reponses,$rep);
-    $reponses["rep"]=$rep;
-    sendJSON($reponses);
+   // var_dump("dump",$reponses);    ///return que les id +libelle questions
+    $stmt->closeCursor();
+    $resp = [];
+    foreach ($reponses as $yo){
+        //var_dump("yo",$yo["idQuestion"]);
+        $reponses = getReponseFromIdQuestion($yo["idQuestion"]);
+        $yo['reponses'] = $reponses;
+        array_push($resp,$yo);
+        //var_dump($resp);
+    }
+    //var_dump($resp);
+    //$reponses["rep"]=$rep;
+    sendJSON($resp);
+
+    
+    //var_dump("rep",$rep);
+    
+
+    
 
 }
 function getReponseFromIdQuestion($idQuestion){
-    var_dump("is",$idQuestion);
+
     $pdo = Singleton::getInstance() -> cnx; 
-    $req ="Select libelle From REPONSES where idReponseQuestion= :id";
+    $req ="Select REPONSES.libelle,REPONSES.bonne_rep From REPONSES,QUESTIONS where idReponseQuestion= :id AND QUESTIONS.idQuestion=REPONSES.idReponseQuestion ";
     $stmt = $pdo->prepare($req);
     $stmt->bindValue(":id",$idQuestion,PDO::PARAM_STR);
     $var=$stmt->execute();
@@ -55,7 +68,7 @@ function getReponseFromIdQuestion($idQuestion){
         var_dump($stmt->errorInfo());
     }
     $reponses=$stmt->fetchAll(PDO::FETCH_ASSOC);
-    var_dump("rep",$reponses);
+   
    return $reponses;
 }
 
